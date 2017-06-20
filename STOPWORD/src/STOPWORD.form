@@ -34,14 +34,24 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="0" pref="750" max="32767" attributes="0"/>
-              <Component id="BTN" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jScrollPane1" alignment="0" min="-2" pref="529" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="Button" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="346" max="32767" attributes="0"/>
+                      <Component id="BTNCOUNT" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <Component id="jScrollPane3" min="-2" pref="350" max="-2" attributes="0"/>
           </Group>
-          <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Component id="jScrollPane2" alignment="1" pref="839" max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <Component id="jScrollPane2" min="-2" pref="530" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="355" max="32767" attributes="0"/>
+              </Group>
           </Group>
       </Group>
     </DimensionLayout>
@@ -49,10 +59,14 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="304" max="-2" attributes="0"/>
-              <Component id="BTN" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Button" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="BTNCOUNT" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" pref="349" max="32767" attributes="0"/>
           </Group>
+          <Component id="jScrollPane3" alignment="0" max="32767" attributes="0"/>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Component id="jScrollPane2" min="-2" pref="301" max="-2" attributes="0"/>
@@ -63,12 +77,12 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="BTN">
+    <Component class="javax.swing.JButton" name="Button">
       <Properties>
         <Property name="text" type="java.lang.String" value="CONVERT"/>
       </Properties>
       <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BTNMouseClicked"/>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="ButtonMouseClicked"/>
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -102,8 +116,30 @@
               <Dimension value="[101, 50]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="TXTAMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane3">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTextPane" name="TXTC">
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JButton" name="BTNCOUNT">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="COUNT"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BTNCOUNTMouseClicked"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>

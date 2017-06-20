@@ -1,7 +1,69 @@
 
 import java.io.*;
+import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 import jdk.jfr.events.FileWriteEvent;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Set;
+import javax.swing.JButton;
+
+class MaxDuplicateWordCount {
+
+    public Map<String, Integer> getWordCount(String fileName) {
+
+        FileInputStream fis = null;
+        DataInputStream dis = null;
+        BufferedReader br = null;
+        Map<String, Integer> wordMap = new HashMap<String, Integer>();
+        try {
+            fis = new FileInputStream(fileName);
+            dis = new DataInputStream(fis);
+            br = new BufferedReader(new InputStreamReader(dis));
+            String line = null;
+            while ((line = br.readLine()) != null) {
+                StringTokenizer st = new StringTokenizer(line, " ");
+                while (st.hasMoreTokens()) {
+                    String tmp = st.nextToken().toLowerCase();
+                    if (wordMap.containsKey(tmp)) {
+                        wordMap.put(tmp, wordMap.get(tmp) + 1);
+                    } else {
+                        wordMap.put(tmp, 1);
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (Exception ex) {
+            }
+        }
+        return wordMap;
+    }
+
+    public List<Map.Entry<String, Integer>> sortByValue(Map<String, Integer> wordMap) {
+
+        Set<Map.Entry<String, Integer>> set = wordMap.entrySet();
+        List<Map.Entry<String, Integer>> list = new ArrayList<Map.Entry<String, Integer>>(set);
+        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                return (o2.getValue()).compareTo(o1.getValue());
+            }
+        });
+        return list;
+    }
+
+}
 
 public class STOPWORD extends javax.swing.JFrame {
 
@@ -14,11 +76,14 @@ public class STOPWORD extends javax.swing.JFrame {
     private void initComponents() {
 
         popupMenu1 = new java.awt.PopupMenu();
-        BTN = new javax.swing.JButton();
+        Button = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TXTB = new javax.swing.JTextPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         TXTA = new javax.swing.JTextPane();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        TXTC = new javax.swing.JTextPane();
+        BTNCOUNT = new javax.swing.JButton();
 
         popupMenu1.setLabel("popupMenu1");
 
@@ -26,10 +91,10 @@ public class STOPWORD extends javax.swing.JFrame {
         setTitle("STOP WORD REMOVAL");
         setPreferredSize(new java.awt.Dimension(800, 800));
 
-        BTN.setText("CONVERT");
-        BTN.addMouseListener(new java.awt.event.MouseAdapter() {
+        Button.setText("CONVERT");
+        Button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BTNMouseClicked(evt);
+                ButtonMouseClicked(evt);
             }
         });
 
@@ -39,27 +104,51 @@ public class STOPWORD extends javax.swing.JFrame {
 
         TXTA.setText("Enter The text here");
         TXTA.setPreferredSize(new java.awt.Dimension(101, 50));
+        TXTA.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TXTAMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(TXTA);
+
+        jScrollPane3.setViewportView(TXTC);
+
+        BTNCOUNT.setText("COUNT");
+        BTNCOUNT.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BTNCOUNTMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 750, Short.MAX_VALUE)
-                .addComponent(BTN)
-                .addContainerGap())
-            .addComponent(jScrollPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(Button)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 346, Short.MAX_VALUE)
+                        .addComponent(BTNCOUNT)
+                        .addGap(33, 33, 33)))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 839, Short.MAX_VALUE))
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 355, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(304, 304, 304)
-                .addComponent(BTN)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Button)
+                    .addComponent(BTNCOUNT))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE))
+            .addComponent(jScrollPane3)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -69,12 +158,12 @@ public class STOPWORD extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BTNMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNMouseClicked
-        int ch;
+    private void ButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonMouseClicked
+
         try {
+            int ch;
             String sh;
             BufferedWriter nf = new BufferedWriter(new FileWriter("F:\\Conversion1.txt"));
-            System.out.println(TXTA.getText());
             TXTA.write(nf);
             nf.close();
             FileReader fr = new FileReader("F:\\Conversion1.txt");
@@ -82,6 +171,55 @@ public class STOPWORD extends javax.swing.JFrame {
             while ((ch = fr.read()) != -1) {
                 if ((char) ch == ' ') {
                     fw.write(';');
+                } else if ((char) ch == '.') {
+                    fw.write(';');
+                } else if ((char) ch == '"') {
+                    fw.write(';');
+                } else if ((char) ch == '?') {
+                    fw.write(';');
+                } else if ((char) ch == '[') {
+                    fw.write(';');
+                } else if ((char) ch == ']') {
+                    fw.write(';');
+                } else if ((char) ch == ',') {
+                    fw.write(';');
+                } else if ((char) ch == ':') {
+                    fw.write(';');
+                } else if ((char) ch == '-') {
+                    fw.write(';');
+                } else if ((char) ch == '_') {
+                    fw.write(';');
+                } else if ((char) ch == '}') {
+                    fw.write(';');
+                } else if ((char) ch == '{') {
+                    fw.write(';');
+                } else if ((char) ch == '&') {
+                    fw.write(';');
+                } else if ((char) ch == '(') {
+                    fw.write(';');
+                } else if ((char) ch == ')') {
+                    fw.write(';');
+                } else if ((char) ch == '+') {
+                    fw.write(';');
+                } else if ((char) ch == '/') {
+                    fw.write(';');
+                } else if ((char) ch == '^') {
+                    fw.write(';');
+                } else if ((char) ch == '%') {
+                    fw.write(';');
+
+                } else if ((char) ch == '*') {
+                    fw.write(';');
+
+                } else if ((char) ch == '=') {
+                    fw.write(';');
+
+                } else if ((char) ch == '!') {
+                    fw.write(';');
+
+                } else if ((char) ch == '@') {
+                    fw.write(';');
+
                 } else {
                     fw.write((char) ch);
                 }
@@ -90,7 +228,7 @@ public class STOPWORD extends javax.swing.JFrame {
             fw.close();
             BufferedReader fr1 = new BufferedReader(new FileReader("F:\\Conversion2.txt"));
             BufferedWriter fw1 = new BufferedWriter(new FileWriter("F:\\Conversion3.txt"));
-            String line;
+                        String line;
             while ((line = fr1.readLine()) != null) {
                 StringTokenizer st = new StringTokenizer(line, ";");
                 while (st.hasMoreTokens()) {
@@ -129,11 +267,21 @@ public class STOPWORD extends javax.swing.JFrame {
                 TXTB.setText(strr1);
             }
             fr4.close();
+
         } catch (IOException e) {
 
         }
 
-    }//GEN-LAST:event_BTNMouseClicked
+    }//GEN-LAST:event_ButtonMouseClicked
+
+    private void BTNCOUNTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BTNCOUNTMouseClicked
+        callcount();  // TODO add your handling code here:
+    }//GEN-LAST:event_BTNCOUNTMouseClicked
+
+    private void TXTAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TXTAMouseClicked
+        TXTA.setText("");   
+        TXTB.setText("");   // TODO add your handling code here:
+    }//GEN-LAST:event_TXTAMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -165,14 +313,25 @@ public class STOPWORD extends javax.swing.JFrame {
                 new STOPWORD().setVisible(true);
             }
         });
-    }
 
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BTN;
+    private javax.swing.JButton BTNCOUNT;
+    private javax.swing.JButton Button;
     private javax.swing.JTextPane TXTA;
     private javax.swing.JTextPane TXTB;
+    private javax.swing.JTextPane TXTC;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private java.awt.PopupMenu popupMenu1;
     // End of variables declaration//GEN-END:variables
+void callcount() {
+        MaxDuplicateWordCount mdc = new MaxDuplicateWordCount();
+        Map<String, Integer> wordMap = mdc.getWordCount("F:\\Conversion3.txt");
+        List<Map.Entry<String, Integer>> list = mdc.sortByValue(wordMap);
+        for (Map.Entry<String, Integer> entry : list) {
+            TXTC.setText(TXTC.getText() + "\n" + entry.getKey() + " ---> " + entry.getValue());
+        }
+    }
 }
